@@ -34,8 +34,8 @@ module.exports = (commits, args) => {
 
   const data = Object.entries(byAuthor)
     .map(([author, { inserted, deleted, total }]) => {
-      let shareOfInserted = inserted / totalInserted * 100;
-      let shareOfDeleted = deleted / totalDeleted * 100;
+      let shareOfInserted = !totalInserted ? 0 : inserted / totalInserted * 100;
+      let shareOfDeleted = !totalDeleted ? 0 : deleted / totalDeleted * 100;
 
       shareOfInserted = pad(shareOfInserted.toFixed(1), 5);
       shareOfDeleted = pad(shareOfDeleted.toFixed(1), 5);

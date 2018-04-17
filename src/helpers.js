@@ -64,17 +64,19 @@ const sortByColumn = column => (a, b) => {
 
 /**
  * Print a section with a title and a table.
- * @param {String}       title Title of the section.
- * @param {Array}        head  Table head row.
- * @param {Array<Array>} data  Table body rows.
+ * @param {String}       title   Title of the section.
+ * @param {Array}        head    Table head row.
+ * @param {Array<Array>} data    Table body rows.
+ * @param {Object}       options Optional options to pass to md-table.
  */
-const printSection = (title, head, data) => {
+const printSection = (title, head, data, options = {}) => {
   process.stdout.write(`\n   ${title}:\n`);
   process.stdout.write(
     getTable(head, data, {
       x: 3,
       y: 1,
       colors: { head: '#eecc99', border: '#555' },
+      ...options,
     })
   );
 };

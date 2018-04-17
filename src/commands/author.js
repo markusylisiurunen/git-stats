@@ -53,6 +53,7 @@ module.exports = (commits, args) => {
   printSection(
     'Changes by author',
     ['Author', 'Inserted', 'Deleted', 'Total', 'Share'],
-    data
+    data,
+    { alignRight: [1, 2, 3, 4] }
   );
 };

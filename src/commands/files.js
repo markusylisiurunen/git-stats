@@ -75,5 +75,9 @@ module.exports = (commits, args) => {
     })
     .sort(sortByColumn(0));
 
-  printSection('Changes by file', head, data);
+  const alignRight = [];
+
+  for (let i = 1; i < head.length; i += 1) alignRight.push(i);
+
+  printSection('Changes by file', head, data, { alignRight });
 };

@@ -2,7 +2,6 @@
  * @overview Print statistics by author.
  */
 
-const pad = require('left-pad');
 const { sortByColumn, printSection } = require('../helpers');
 
 /**
@@ -34,11 +33,11 @@ module.exports = (commits, args) => {
 
   const data = Object.entries(byAuthor)
     .map(([author, { inserted, deleted, total }]) => {
-      let shareOfInserted = !totalInserted ? 0 : inserted / totalInserted * 100;
-      let shareOfDeleted = !totalDeleted ? 0 : deleted / totalDeleted * 100;
+      let shareOfInserted = (!totalInserted ? 0 : inserted / totalInserted * 100).toFixed(1);
+      let shareOfDeleted = (!totalDeleted ? 0 : deleted / totalDeleted * 100).toFixed(1);
 
-      shareOfInserted = pad(shareOfInserted.toFixed(1), 5);
-      shareOfDeleted = pad(shareOfDeleted.toFixed(1), 5);
+      shareOfInserted = String(shareOfInserted).padStart(5);
+      shareOfDeleted = String(shareOfDeleted).padStart(5);
 
       return [
         author,

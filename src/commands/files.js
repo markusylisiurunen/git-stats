@@ -2,7 +2,6 @@
  * @overview Print statistics by file.
  */
 
-const pad = require('left-pad');
 const { sortByColumn, printSection } = require('../helpers');
 
 /**
@@ -56,11 +55,11 @@ module.exports = (commits, args) => {
         const { inserted: sInserted, deleted: sDeleted } = stats;
         const { inserted: tInserted, deleted: tDeleted } = entry;
 
-        let shareOfInserted = !sInserted ? 0 : sInserted / tInserted * 100;
-        let shareOfDeleted = !sDeleted ? 0 : sDeleted / tDeleted * 100;
+        let shareOfInserted = (!sInserted ? 0 : sInserted / tInserted * 100).toFixed(1);
+        let shareOfDeleted = (!sDeleted ? 0 : sDeleted / tDeleted * 100).toFixed(1);
 
-        shareOfInserted = pad(shareOfInserted.toFixed(1), 5);
-        shareOfDeleted = pad(shareOfDeleted.toFixed(1), 5);
+        shareOfInserted = String(shareOfInserted).padStart(5);
+        shareOfDeleted = String(shareOfDeleted).padStart(5);
 
         return `${shareOfInserted} %  ${shareOfDeleted} %`;
       });

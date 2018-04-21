@@ -3,7 +3,7 @@
 const minimist = require('minimist');
 const getTable = require('@markusylisiurunen/md-table');
 const { isRepository, getCommitLog } = require('./src/git');
-const { getIncludesAndExcludes, filterCommits } = require('./src/helpers');
+const { getIncludesAndExcludes, filterCommits, isValidArgument } = require('./src/helpers');
 const commands = require('./src/commands');
 
 const help = `
@@ -19,11 +19,12 @@ Options:
   -h, --help     output usage information
   -i, --include  glob of files to include
   -e, --exclude  glob of files to exclude
+  -s, --since    output stats from given start date (and optional time)
 
 Examples:
 
   $ git-stats author
-  $ git-stats -i "**/*.js" -i "*.py" -e "**/config.js" author files
+  $ git-stats -i "**/*.js" -i "*.py" -e "**/config.js" -s "2018-04-20 04:20" author files
 `;
 
 /**
@@ -36,13 +37,20 @@ const main = async args => {
     return;
   }
 
+  const since = args.s || args.since;
+  if (since && !isValidArgument.since(since)) {
+    console.log('Error: the --since argument must be formatted YYYY-MM-DD or "YYYY-MM-DD hh-mm" \n');
+    return;
+  }
+
   if (!await isRepository()) {
     console.log('You are not in a Git repository.');
     return;
   }
 
   const globs = getIncludesAndExcludes(args);
-  const commits = filterCommits(await getCommitLog(), globs);
+
+  const commits = filterCommits(await getCommitLog(since), globs);
 
   if (args._.reduce((r, c) => r || !commands[c], false)) {
     console.log(help);

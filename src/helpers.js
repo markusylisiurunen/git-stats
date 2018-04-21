@@ -81,9 +81,18 @@ const printSection = (title, head, data, options = {}) => {
   );
 };
 
+const isValidArgument = {
+  since: (timeString) => {
+    const DATE_ONLY = /^[\d]{4}-[\d]{2}-[\d]{2}$/;
+    const DATE_AND_TIME = /^[\d]{4}-[\d]{2}-[\d]{2} [\d]{2}:[\d]{2}$/
+    return DATE_ONLY.test(timeString) || DATE_AND_TIME.test(timeString);
+  },
+};
+
 module.exports = {
   getIncludesAndExcludes,
   filterCommits,
   sortByColumn,
   printSection,
+  isValidArgument,
 };

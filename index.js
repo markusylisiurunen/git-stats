@@ -31,7 +31,7 @@ Examples:
  * @param {Object} args Parsed arguments.
  */
 const main = async args => {
-  if (args._.length === 0 || args.h || args.help) {
+  if (args._.length === 0 || args.h || args.help || args._.some(arg => !commands[arg])) {
     console.log(help);
     return;
   }
@@ -43,11 +43,6 @@ const main = async args => {
 
   const globs = getIncludesAndExcludes(args);
   const commits = filterCommits(await getCommitLog(), globs);
-
-  if (args._.reduce((r, c) => r || !commands[c], false)) {
-    console.log(help);
-    return;
-  }
 
   args._.forEach(command => commands[command](commits, args));
 };

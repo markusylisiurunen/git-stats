@@ -30,11 +30,12 @@ Options:
   -h, --help     output usage information
   -i, --include  glob of files to include
   -e, --exclude  glob of files to exclude
+  -s, --since    output stats from given start date (and optional time)
 
 Examples:
 
   $ git-stats author
-  $ git-stats -i "**/*.js" -i "*.py" -e "**/config.js" author files
+  $ git-stats -i "**/*.js" -i "*.py" -e "**/config.js" -s "2018-04-20 04:20" author files
 ```
 
 ## License

@@ -28,9 +28,14 @@ const isRepository = async () => {
  * Get the full commit log.
  * @return {Promise<Array<Object>>} An array of commits.
  */
-const getCommitLog = async () => {
+const getCommitLog = async (startTime = null) => {
   const BREAK = '---';
-  const command = `git log --pretty=tformat:"${BREAK}%an" --numstat`;
+  let command = `git log --pretty=tformat:"${BREAK}%an" --numstat`;
+  if (startTime) {
+    const [date, time] = startTime.split(' ');
+    command += ` --since "${date} ${time || '00:00'}"`
+  }
+
   let rawCommits;
 
   try {
